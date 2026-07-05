@@ -1,0 +1,75 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#1e293b;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+}
+
+.container{
+background:white;
+padding:40px;
+border-radius:12px;
+text-align:center;
+width:500px;
+box-shadow:0 0 15px rgba(0,0,0,.3);
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.choices button{
+padding:15px 25px;
+margin:10px;
+font-size:20px;
+cursor:pointer;
+border:none;
+border-radius:8px;
+background:#2563eb;
+color:white;
+}
+
+.choices button:hover{
+background:#1d4ed8;
+}
+
+.result{
+margin-top:30px;
+}
+
+.result h2{
+margin:10px;
+}
+
+#winner{
+margin-top:20px;
+color:#16a34a;
+}
+
+.score{
+margin-top:30px;
+font-size:20px;
+}
+
+.reset{
+margin-top:30px;
+padding:12px 25px;
+font-size:18px;
+background:#dc2626;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+
+.reset:hover{
+background:#b91c1c;
+}
