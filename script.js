@@ -1,68 +1,244 @@
-let userScore = 0;
-let computerScore = 0;
 
-function play(userChoice){
+// =========================================
+// Rock Paper Scissors Pro
+// =========================================
 
-const choices=["Rock","Paper","Scissors"];
+const choices = ["Rock", "Paper", "Scissors"];
 
-const computerChoice=choices[Math.floor(Math.random()*3)];
+let stats = {
+    wins: Number(localStorage.getItem("wins")) || 0,
+    losses: Number(localStorage.getItem("losses")) || 0,
+    draws: Number(localStorage.getItem("draws")) || 0,
+    streak: Number(localStorage.getItem("streak")) || 0,
+    round: Number(localStorage.getItem("round")) || 1
+};
 
-document.getElementById("player").innerHTML="You : "+userChoice;
+// DOM
+const userScore = document.getElementById("userScore");
+const computerScore = document.getElementById("computerScore");
+const drawScore = document.getElementById("drawScore");
 
-document.getElementById("computer").innerHTML="Computer : "+computerChoice;
+const playerChoice = document.getElementById("playerChoice");
+const computerChoice = document.getElementById("computerChoice");
 
-let result="";
+const winner = document.getElementById("winner");
+const historyList = document.getElementById("historyList");
 
-if(userChoice===computerChoice){
+updateScore();
 
-result="It's a Draw!";
+// =========================================
+// Play Game
+// =========================================
+
+function play(userMove){
+
+    computerChoice.innerHTML = "🤔";
+
+    winner.innerHTML = "Computer is thinking...";
+
+    setTimeout(()=>{
+
+        const computerMove = getComputerMove(userMove);
+
+        playerChoice.innerHTML = emoji(userMove);
+        computerChoice.innerHTML = emoji(computerMove);
+
+        checkWinner(userMove, computerMove);
+
+    },700);
 
 }
-else if(
 
-(userChoice==="Rock" && computerChoice==="Scissors")||
+// =========================================
+// Computer AI
+// =========================================
 
-(userChoice==="Paper" && computerChoice==="Rock")||
+function getComputerMove(userMove){
 
-(userChoice==="Scissors" && computerChoice==="Paper")
+    const difficulty =
+    document.getElementById("difficulty")?.value || "Medium";
 
-){
+    if(difficulty==="Easy"){
 
-result="🎉 You Win!";
+        return choices[Math.floor(Math.random()*3)];
 
-userScore++;
+    }
+
+    if(difficulty==="Hard"){
+
+        // 70% chance computer wins
+
+        if(Math.random()<0.7){
+
+            if(userMove==="Rock") return "Paper";
+            if(userMove==="Paper") return "Scissors";
+            if(userMove==="Scissors") return "Rock";
+
+        }
+
+    }
+
+    return choices[Math.floor(Math.random()*3)];
 
 }
-else{
 
-result="😢 Computer Wins!";
+// =========================================
+// Winner
+// =========================================
 
-computerScore++;
+function checkWinner(user, computer){
+
+    let result="";
+
+    if(user===computer){
+
+        stats.draws++;
+
+        result="🤝 Draw!";
+
+        drawScore.textContent=stats.draws;
+
+        stats.streak=0;
+
+    }
+
+    else if(
+
+        (user==="Rock"&&computer==="Scissors")||
+
+        (user==="Paper"&&computer==="Rock")||
+
+        (user==="Scissors"&&computer==="Paper")
+
+    ){
+
+        stats.wins++;
+
+        stats.streak++;
+
+        userScore.textContent=stats.wins;
+
+        result="🎉 You Win!";
+
+    }
+
+    else{
+
+        stats.losses++;
+
+        stats.streak=0;
+
+        computerScore.textContent=stats.losses;
+
+        result="😢 Computer Wins!";
+
+    }
+
+    winner.innerHTML=result;
+
+    stats.round++;
+
+    save();
+
+    addHistory(user,computer,result);
 
 }
 
-document.getElementById("winner").innerHTML=result;
+// =========================================
+// History
+// =========================================
 
-document.getElementById("userScore").innerHTML=userScore;
+function addHistory(user,computer,result){
 
-document.getElementById("computerScore").innerHTML=computerScore;
+    if(!historyList) return;
+
+    const item=document.createElement("li");
+
+    item.innerHTML=
+
+    `${emoji(user)} ${user}
+     vs
+     ${emoji(computer)} ${computer}
+     ➜ ${result}`;
+
+    historyList.prepend(item);
+
+    while(historyList.children.length>15){
+
+        historyList.removeChild(historyList.lastChild);
+
+    }
 
 }
+
+// =========================================
+// Emoji
+// =========================================
+
+function emoji(move){
+
+    if(move==="Rock") return "🪨";
+
+    if(move==="Paper") return "📄";
+
+    return "✂️";
+
+}
+
+// =========================================
+// Update
+// =========================================
+
+function updateScore(){
+
+    userScore.textContent=stats.wins;
+
+    computerScore.textContent=stats.losses;
+
+    if(drawScore)
+        drawScore.textContent=stats.draws;
+
+}
+
+// =========================================
+// Save
+// =========================================
+
+function save(){
+
+    Object.keys(stats).forEach(key=>{
+
+        localStorage.setItem(key,stats[key]);
+
+    });
+
+}
+
+// =========================================
+// Reset
+// =========================================
 
 function resetGame(){
 
-userScore=0;
+    localStorage.clear();
 
-computerScore=0;
+    stats={
+        wins:0,
+        losses:0,
+        draws:0,
+        streak:0,
+        round:1
+    };
 
-document.getElementById("userScore").innerHTML=0;
+    updateScore();
 
-document.getElementById("computerScore").innerHTML=0;
+    if(historyList)
+        historyList.innerHTML="";
 
-document.getElementById("winner").innerHTML="Choose your move!";
+    playerChoice.innerHTML="❔";
 
-document.getElementById("player").innerHTML="You :";
+    computerChoice.innerHTML="❔";
 
-document.getElementById("computer").innerHTML="Computer :";
+    winner.innerHTML="Choose Your Move!";
 
 }
