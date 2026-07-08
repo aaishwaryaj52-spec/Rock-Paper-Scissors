@@ -1,47 +1,234 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rock Paper Scissors Game</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>🎮 Rock Paper Scissors Pro</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+<div class="game-container">
 
-<h1>🎮 Rock Paper Scissors</h1>
+    <!-- Header -->
+    <header class="header">
 
-<div class="choices">
+        <h1>🎮 Rock Paper Scissors Pro</h1>
 
-<button onclick="play('Rock')">🪨 Rock</button>
+        <p>Challenge the Computer and Become the Champion!</p>
 
-<button onclick="play('Paper')">📄 Paper</button>
+        <div class="top-buttons">
 
-<button onclick="play('Scissors')">✂️ Scissors</button>
+            <button id="themeToggle">
+                🌙
+            </button>
 
-</div>
+            <button id="soundToggle">
+                🔊
+            </button>
 
-<div class="result">
+        </div>
 
-<h2 id="player">You :</h2>
+    </header>
 
-<h2 id="computer">Computer :</h2>
+    <!-- Scoreboard -->
+    <section class="scoreboard">
 
-<h1 id="winner">Choose your move!</h1>
+        <div class="card">
 
-</div>
+            <h3>👤 You</h3>
 
-<div class="score">
+            <h1 id="userScore">0</h1>
 
-<h2>Your Score : <span id="userScore">0</span></h2>
+        </div>
 
-<h2>Computer Score : <span id="computerScore">0</span></h2>
+        <div class="card">
 
-</div>
+            <h3>🤖 Computer</h3>
 
-<button class="reset" onclick="resetGame()">Reset Game</button>
+            <h1 id="computerScore">0</h1>
+
+        </div>
+
+        <div class="card">
+
+            <h3>🤝 Draws</h3>
+
+            <h1 id="drawScore">0</h1>
+
+        </div>
+
+    </section>
+
+    <!-- Statistics -->
+    <section class="stats">
+
+        <div>
+            🏆 Wins
+            <span id="wins">0</span>
+        </div>
+
+        <div>
+            ❌ Losses
+            <span id="losses">0</span>
+        </div>
+
+        <div>
+            🤝 Draws
+            <span id="draws">0</span>
+        </div>
+
+        <div>
+            🔥 Win Streak
+            <span id="streak">0</span>
+        </div>
+
+    </section>
+
+    <!-- Difficulty -->
+    <section class="difficulty">
+
+        <label>Select Difficulty</label>
+
+        <select id="difficulty">
+
+            <option>Easy</option>
+
+            <option selected>Medium</option>
+
+            <option>Hard</option>
+
+        </select>
+
+    </section>
+
+    <!-- Round -->
+    <section class="round">
+
+        Round :
+        <span id="round">1</span>
+
+    </section>
+
+    <!-- Timer -->
+    <section class="timer">
+
+        ⏳
+        <span id="timer">10</span>s
+
+    </section>
+
+    <!-- Choices -->
+    <section class="choices">
+
+        <button onclick="play('Rock')">
+            🪨
+            <span>Rock</span>
+        </button>
+
+        <button onclick="play('Paper')">
+            📄
+            <span>Paper</span>
+        </button>
+
+        <button onclick="play('Scissors')">
+            ✂️
+            <span>Scissors</span>
+        </button>
+
+    </section>
+
+    <!-- Battle Area -->
+    <section class="battle">
+
+        <div class="player">
+
+            <h3>You</h3>
+
+            <div id="playerChoice">❔</div>
+
+        </div>
+
+        <div class="vs">
+
+            ⚡ VS ⚡
+
+        </div>
+
+        <div class="computer">
+
+            <h3>Computer</h3>
+
+            <div id="computerChoice">❔</div>
+
+        </div>
+
+    </section>
+
+    <!-- Winner -->
+    <section class="winner">
+
+        <h2 id="winner">
+
+            Make Your Move!
+
+        </h2>
+
+    </section>
+
+    <!-- Match History -->
+    <section class="history">
+
+        <h3>
+
+            📜 Match History
+
+        </h3>
+
+        <ul id="historyList">
+
+        </ul>
+
+    </section>
+
+    <!-- Buttons -->
+    <section class="buttons">
+
+        <button onclick="resetGame()">
+
+            🔄 Reset Game
+
+        </button>
+
+        <button onclick="downloadHistory()">
+
+            📥 Download History
+
+        </button>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+
+        <small>
+
+            Built with ❤️ using HTML, CSS & JavaScript
+
+        </small>
+
+    </footer>
 
 </div>
 
